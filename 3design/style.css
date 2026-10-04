@@ -1,0 +1,1030 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --cyan: #00f7ff;
+    --blue: #176bff;
+    --purple: #8b2cff;
+    --pink: #ff00c8;
+    --bg: #02030b;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    overflow: hidden;
+    font-family: Arial, Helvetica, sans-serif;
+    background:
+        radial-gradient(circle at 50% 50%, #101a42 0%, #050817 35%, #02030b 75%);
+    color: white;
+}
+
+/* =========================
+   BACKGROUND
+========================= */
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at 20% 30%,
+            rgba(0, 247, 255, 0.12),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 80% 70%,
+            rgba(139, 44, 255, 0.16),
+            transparent 30%
+        );
+
+    pointer-events: none;
+}
+
+.stars {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.star {
+    position: absolute;
+
+    width: 2px;
+    height: 2px;
+
+    background: white;
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 6px white,
+        0 0 12px var(--cyan);
+
+    animation: starMove linear infinite;
+}
+
+@keyframes starMove {
+    from {
+        transform: translateZ(0) translateY(0);
+        opacity: 0.2;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    to {
+        transform: translateZ(300px) translateY(-120px);
+        opacity: 0;
+    }
+}
+
+/* =========================
+   SCENE
+========================= */
+
+.scene {
+    position: relative;
+
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    perspective: 1800px;
+    transform-style: preserve-3d;
+
+    transition: transform 0.15s ease-out;
+
+    z-index: 2;
+}
+
+/* =========================
+   3D PORTAL
+========================= */
+
+.portal {
+    position: absolute;
+
+    width: 700px;
+    height: 700px;
+
+    transform-style: preserve-3d;
+
+    transform: translateZ(-200px);
+
+    pointer-events: none;
+}
+
+/* Portal rings */
+
+.ring {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    border-radius: 50%;
+
+    border: 2px solid transparent;
+
+    transform-style: preserve-3d;
+
+    transform-origin: center;
+}
+
+.ring::before,
+.ring::after {
+    content: "";
+
+    position: absolute;
+    inset: -8px;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(0, 247, 255, 0.3);
+
+    box-shadow:
+        0 0 15px var(--cyan),
+        inset 0 0 15px var(--cyan);
+}
+
+.ring-1 {
+    width: 580px;
+    height: 580px;
+
+    margin-left: -290px;
+    margin-top: -290px;
+
+    border-color: var(--cyan);
+
+    box-shadow:
+        0 0 15px var(--cyan),
+        0 0 40px rgba(0, 247, 255, 0.7),
+        inset 0 0 25px rgba(0, 247, 255, 0.3);
+
+    animation: rotateRing 12s linear infinite;
+}
+
+.ring-2 {
+    width: 480px;
+    height: 480px;
+
+    margin-left: -240px;
+    margin-top: -240px;
+
+    border-color: var(--purple);
+
+    box-shadow:
+        0 0 15px var(--purple),
+        0 0 45px rgba(139, 44, 255, 0.7);
+
+    animation:
+        rotateRingReverse 9s linear infinite,
+        ringPulse 3s ease-in-out infinite;
+}
+
+.ring-3 {
+    width: 370px;
+    height: 370px;
+
+    margin-left: -185px;
+    margin-top: -185px;
+
+    border-color: var(--pink);
+
+    box-shadow:
+        0 0 15px var(--pink),
+        0 0 45px rgba(255, 0, 200, 0.5);
+
+    animation: rotateRing 7s linear infinite reverse;
+}
+
+@keyframes rotateRing {
+    from {
+        transform: rotateX(65deg) rotateZ(0deg);
+    }
+
+    to {
+        transform: rotateX(65deg) rotateZ(360deg);
+    }
+}
+
+@keyframes rotateRingReverse {
+    from {
+        transform: rotateY(65deg) rotateZ(360deg);
+    }
+
+    to {
+        transform: rotateY(65deg) rotateZ(0deg);
+    }
+}
+
+@keyframes ringPulse {
+    0%,
+    100% {
+        opacity: 0.55;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+/* =========================
+   PORTAL CORE
+========================= */
+
+.portal-core {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 280px;
+    height: 280px;
+
+    margin-left: -140px;
+    margin-top: -140px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            #ffffff 0%,
+            var(--cyan) 7%,
+            #006eff 20%,
+            #3412a8 45%,
+            transparent 70%
+        );
+
+    filter: blur(2px);
+
+    box-shadow:
+        0 0 30px var(--cyan),
+        0 0 80px var(--blue),
+        0 0 160px var(--purple);
+
+    animation:
+        corePulse 3s ease-in-out infinite,
+        coreRotate 10s linear infinite;
+
+    transform-style: preserve-3d;
+}
+
+.core-light {
+    position: absolute;
+    inset: 30px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            white,
+            var(--cyan) 20%,
+            #176bff 45%,
+            transparent 70%
+        );
+
+    filter: blur(8px);
+}
+
+@keyframes corePulse {
+    0%,
+    100% {
+        transform: scale(0.8) translateZ(-100px);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: scale(1.2) translateZ(100px);
+        opacity: 1;
+    }
+}
+
+@keyframes coreRotate {
+    from {
+        rotate: 0deg;
+    }
+
+    to {
+        rotate: 360deg;
+    }
+}
+
+/* =========================
+   3D CUBES
+========================= */
+
+.cube {
+    position: absolute;
+
+    width: 70px;
+    height: 70px;
+
+    transform-style: preserve-3d;
+
+    animation: cubeFloat 7s ease-in-out infinite;
+}
+
+.cube span {
+    position: absolute;
+
+    width: 70px;
+    height: 70px;
+
+    border: 1px solid var(--cyan);
+
+    background: rgba(0, 247, 255, 0.03);
+
+    box-shadow:
+        inset 0 0 20px rgba(0, 247, 255, 0.1),
+        0 0 15px rgba(0, 247, 255, 0.4);
+}
+
+.cube span:nth-child(1) {
+    transform: translateZ(35px);
+}
+
+.cube span:nth-child(2) {
+    transform: rotateY(180deg) translateZ(35px);
+}
+
+.cube span:nth-child(3) {
+    transform: rotateY(90deg) translateZ(35px);
+}
+
+.cube span:nth-child(4) {
+    transform: rotateY(-90deg) translateZ(35px);
+}
+
+.cube span:nth-child(5) {
+    transform: rotateX(90deg) translateZ(35px);
+}
+
+.cube span:nth-child(6) {
+    transform: rotateX(-90deg) translateZ(35px);
+}
+
+.cube-1 {
+    left: 30px;
+    top: 90px;
+
+    animation-delay: -2s;
+}
+
+.cube-2 {
+    right: 20px;
+    bottom: 100px;
+
+    animation-delay: -4s;
+}
+
+.cube-3 {
+    left: 100px;
+    bottom: 30px;
+
+    transform: scale(0.55);
+
+    animation-delay: -6s;
+}
+
+@keyframes cubeFloat {
+    0%,
+    100% {
+        transform:
+            translate3d(0, 0, 100px)
+            rotateX(0deg)
+            rotateY(0deg);
+    }
+
+    50% {
+        transform:
+            translate3d(20px, -50px, 300px)
+            rotateX(180deg)
+            rotateY(180deg);
+    }
+}
+
+/* =========================
+   LOGIN CARD
+========================= */
+
+.login-card {
+    position: relative;
+
+    width: min(430px, 90vw);
+
+    padding: 42px;
+
+    border: 1px solid rgba(0, 247, 255, 0.45);
+
+    border-radius: 25px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(10, 20, 50, 0.75),
+            rgba(5, 5, 20, 0.6)
+        );
+
+    backdrop-filter: blur(25px);
+
+    box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.6),
+        0 0 30px rgba(0, 247, 255, 0.15),
+        inset 0 0 40px rgba(0, 247, 255, 0.04);
+
+    transform:
+        translateZ(250px)
+        rotateX(0deg);
+
+    transform-style: preserve-3d;
+
+    animation: cardEnter 1.4s cubic-bezier(.2,.8,.2,1);
+
+    z-index: 10;
+}
+
+@keyframes cardEnter {
+    from {
+        opacity: 0;
+        transform:
+            translateZ(-500px)
+            rotateX(35deg)
+            scale(0.7);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateZ(250px)
+            rotateX(0deg)
+            scale(1);
+    }
+}
+
+.login-card::before {
+    content: "";
+
+    position: absolute;
+
+    inset: -1px;
+
+    border-radius: inherit;
+
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(0, 247, 255, 0.6),
+        transparent,
+        rgba(139, 44, 255, 0.5),
+        transparent
+    );
+
+    opacity: 0.5;
+
+    filter: blur(8px);
+
+    z-index: -1;
+
+    animation: borderMove 5s linear infinite;
+}
+
+@keyframes borderMove {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* =========================
+   LOGO
+========================= */
+
+.logo {
+    position: relative;
+
+    width: 70px;
+    height: 70px;
+
+    margin: 0 auto 18px;
+
+    transform-style: preserve-3d;
+}
+
+.logo-orbit {
+    position: absolute;
+
+    inset: 8px;
+
+    border: 2px solid var(--cyan);
+
+    border-radius: 50%;
+
+    transform:
+        rotateX(65deg)
+        rotateZ(30deg);
+
+    box-shadow:
+        0 0 15px var(--cyan);
+
+    animation: logoRotate 3s linear infinite;
+}
+
+.logo-core {
+    position: absolute;
+
+    width: 25px;
+    height: 25px;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    border-radius: 50%;
+
+    background: white;
+
+    box-shadow:
+        0 0 10px white,
+        0 0 30px var(--cyan),
+        0 0 60px var(--blue);
+
+    animation: logoPulse 2s ease-in-out infinite;
+}
+
+@keyframes logoRotate {
+    to {
+        transform:
+            rotateX(65deg)
+            rotateZ(390deg);
+    }
+}
+
+@keyframes logoPulse {
+    50% {
+        transform:
+            translate(-50%, -50%)
+            scale(1.4);
+    }
+}
+
+/* =========================
+   TEXT
+========================= */
+
+h1 {
+    text-align: center;
+
+    font-size: 28px;
+    letter-spacing: 5px;
+
+    background:
+        linear-gradient(
+            90deg,
+            white,
+            var(--cyan),
+            white
+        );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    color: transparent;
+
+    text-shadow:
+        0 0 20px rgba(0, 247, 255, 0.4);
+}
+
+.subtitle {
+    text-align: center;
+
+    margin-top: 8px;
+    margin-bottom: 30px;
+
+    color: #9ca9c7;
+
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+/* =========================
+   INPUTS
+========================= */
+
+.input-box {
+    position: relative;
+
+    margin-bottom: 18px;
+}
+
+.input-box input {
+    width: 100%;
+
+    padding: 17px 45px;
+
+    border: 1px solid rgba(0, 247, 255, 0.2);
+
+    border-radius: 12px;
+
+    outline: none;
+
+    background: rgba(0, 0, 0, 0.35);
+
+    color: white;
+
+    font-size: 15px;
+
+    transition: 0.3s;
+}
+
+.input-box input::placeholder {
+    color: #687492;
+}
+
+.input-box input:focus {
+    border-color: var(--cyan);
+
+    box-shadow:
+        0 0 20px rgba(0, 247, 255, 0.2),
+        inset 0 0 15px rgba(0, 247, 255, 0.05);
+
+    transform: translateZ(10px);
+}
+
+.icon {
+    position: absolute;
+
+    left: 17px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: var(--cyan);
+
+    font-size: 16px;
+
+    z-index: 2;
+}
+
+.show-password {
+    position: absolute;
+
+    right: 14px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    border: none;
+
+    background: none;
+
+    color: var(--cyan);
+
+    cursor: pointer;
+
+    font-size: 15px;
+}
+
+/* =========================
+   OPTIONS
+========================= */
+
+.options {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    margin: 8px 0 24px;
+
+    font-size: 12px;
+
+    color: #8895b3;
+}
+
+.options label {
+    display: flex;
+    gap: 7px;
+    align-items: center;
+}
+
+.options input {
+    accent-color: var(--cyan);
+}
+
+.options a,
+.signup a {
+    color: var(--cyan);
+
+    text-decoration: none;
+
+    transition: 0.3s;
+}
+
+.options a:hover,
+.signup a:hover {
+    text-shadow: 0 0 10px var(--cyan);
+}
+
+/* =========================
+   LOGIN BUTTON
+========================= */
+
+.login-btn {
+    position: relative;
+
+    width: 100%;
+
+    padding: 16px;
+
+    border: 1px solid var(--cyan);
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0, 247, 255, 0.15),
+            rgba(139, 44, 255, 0.2)
+        );
+
+    color: white;
+
+    font-size: 13px;
+    font-weight: bold;
+
+    letter-spacing: 2px;
+
+    cursor: pointer;
+
+    overflow: hidden;
+
+    transition: 0.3s;
+}
+
+.login-btn::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -100%;
+
+    width: 100%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.35),
+            transparent
+        );
+
+    transition: 0.5s;
+}
+
+.login-btn:hover::before {
+    left: 100%;
+}
+
+.login-btn:hover {
+    transform:
+        translateY(-3px)
+        translateZ(20px);
+
+    box-shadow:
+        0 0 25px rgba(0, 247, 255, 0.4);
+}
+
+.arrow {
+    margin-left: 10px;
+
+    font-size: 18px;
+}
+
+/* =========================
+   DIVIDER
+========================= */
+
+.divider {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin: 25px 0;
+
+    color: #53607c;
+
+    font-size: 10px;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+
+    flex: 1;
+
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(0, 247, 255, 0.3)
+        );
+}
+
+.divider::after {
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0, 247, 255, 0.3),
+            transparent
+        );
+}
+
+/* =========================
+   GOOGLE BUTTON
+========================= */
+
+.social-btn {
+    width: 100%;
+
+    padding: 14px;
+
+    border-radius: 10px;
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+
+    background: rgba(255, 255, 255, 0.04);
+
+    color: #c9d0df;
+
+    cursor: pointer;
+
+    font-size: 11px;
+
+    letter-spacing: 1px;
+
+    transition: 0.3s;
+}
+
+.social-btn:hover {
+    border-color: rgba(0, 247, 255, 0.5);
+
+    background: rgba(0, 247, 255, 0.05);
+
+    transform: translateY(-2px);
+}
+
+/* =========================
+   SIGNUP
+========================= */
+
+.signup {
+    text-align: center;
+
+    margin-top: 25px;
+
+    color: #687492;
+
+    font-size: 11px;
+}
+
+/* =========================
+   TOAST
+========================= */
+
+.toast {
+    position: fixed;
+
+    left: 50%;
+    bottom: 30px;
+
+    transform:
+        translateX(-50%)
+        translateY(100px);
+
+    padding: 13px 25px;
+
+    border: 1px solid var(--cyan);
+
+    border-radius: 30px;
+
+    background: rgba(0, 10, 25, 0.9);
+
+    color: var(--cyan);
+
+    box-shadow:
+        0 0 25px rgba(0, 247, 255, 0.3);
+
+    font-size: 12px;
+
+    opacity: 0;
+
+    transition: 0.4s;
+
+    z-index: 100;
+}
+
+.toast.show {
+    opacity: 1;
+
+    transform:
+        translateX(-50%)
+        translateY(0);
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    .portal {
+        width: 500px;
+        height: 500px;
+    }
+
+    .ring-1 {
+        width: 430px;
+        height: 430px;
+
+        margin-left: -215px;
+        margin-top: -215px;
+    }
+
+    .ring-2 {
+        width: 350px;
+        height: 350px;
+
+        margin-left: -175px;
+        margin-top: -175px;
+    }
+
+    .ring-3 {
+        width: 270px;
+        height: 270px;
+
+        margin-left: -135px;
+        margin-top: -135px;
+    }
+
+    .portal-core {
+        width: 190px;
+        height: 190px;
+
+        margin-left: -95px;
+        margin-top: -95px;
+    }
+
+    .login-card {
+        padding: 30px 22px;
+
+        transform:
+            translateZ(100px);
+    }
+
+    h1 {
+        font-size: 22px;
+        letter-spacing: 3px;
+    }
+
+    .cube {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

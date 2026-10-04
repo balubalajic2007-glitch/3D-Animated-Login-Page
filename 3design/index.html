@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Animated Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Animated background -->
+    <div class="stars" id="stars"></div>
+
+    <div class="scene">
+
+        <!-- 3D Portal -->
+        <div class="portal">
+
+            <div class="ring ring-1"></div>
+            <div class="ring ring-2"></div>
+            <div class="ring ring-3"></div>
+
+            <div class="portal-core">
+                <div class="core-light"></div>
+            </div>
+
+            <!-- Floating 3D cubes -->
+            <div class="cube cube-1">
+                <span></span><span></span><span></span>
+                <span></span><span></span><span></span>
+            </div>
+
+            <div class="cube cube-2">
+                <span></span><span></span><span></span>
+                <span></span><span></span><span></span>
+            </div>
+
+            <div class="cube cube-3">
+                <span></span><span></span><span></span>
+                <span></span><span></span><span></span>
+            </div>
+
+        </div>
+
+        <!-- Login Card -->
+        <div class="login-card" id="loginCard">
+
+            <div class="logo">
+                <div class="logo-orbit"></div>
+                <div class="logo-core"></div>
+            </div>
+
+            <h1>WELCOME BACK</h1>
+            <p class="subtitle">Enter the portal</p>
+
+            <form id="loginForm">
+
+                <div class="input-box">
+                    <span class="icon">◉</span>
+                    <input
+                        type="text"
+                        id="username"
+                        placeholder="Username"
+                        autocomplete="username"
+                        required
+                    >
+                </div>
+
+                <div class="input-box">
+                    <span class="icon">◆</span>
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Password"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        class="show-password"
+                        id="showPassword"
+                    >
+                        ◉
+                    </button>
+                </div>
+
+                <div class="options">
+                    <label>
+                        <input type="checkbox">
+                        <span>Remember me</span>
+                    </label>
+
+                    <a href="#" id="forgotPassword">
+                        Forgot password?
+                    </a>
+                </div>
+
+                <button type="submit" class="login-btn">
+                    <span>ENTER PORTAL</span>
+                    <span class="arrow">→</span>
+                </button>
+
+            </form>
+
+            <div class="divider">
+                <span>OR</span>
+            </div>
+
+            <button class="social-btn" type="button">
+                CONTINUE WITH GOOGLE
+            </button>
+
+            <p class="signup">
+                Don't have an account?
+                <a href="#">Create account</a>
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
